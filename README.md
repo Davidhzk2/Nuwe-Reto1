@@ -10,6 +10,7 @@ Creacion de una api que permita registarse y guardar los datos en una db y así 
 ## Requisitos 📝
 
 * Tener Node Js instalado.
+``` node -v  ```
 
 ## Pendientes 
 
