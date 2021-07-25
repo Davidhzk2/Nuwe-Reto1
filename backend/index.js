@@ -1,21 +1,19 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const {dbConnection} = require("./db/connectdb");
+require("dotenv").config();
+
+const User = require("./routes/user");
+
 
 const app = express();
 
 app.use(express.json());
 
-// connect with db 
-const port = process.env.PORT || 3000;
+app.use("/reto/user/", User);
 
-app.listen(port, ()=>
-    console.log("el servidor esta corriendo en el puerto: "+ port)
+// Listen Port
+app.listen(process.env.PORT, ()=>
+    console.log("Server running in port: "+ process.env.PORT)
 );
 
-mongoose.connect("mongodb://127.0.0.1:27017/nuweReto1", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-}).then(() => console.log("Conexion a MongoDB: ON"))
-.catch((error) => console.log("Error al conectar con Mongo"))
+dbConnection();
