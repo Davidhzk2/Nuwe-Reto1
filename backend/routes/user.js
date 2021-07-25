@@ -26,4 +26,18 @@ router.post("/registerUser/", async (req, res) =>{
     }
 });
 
+router.post("/login/", async (req, res) =>{
+    if(!req.body.username || !req.body.password) return res.status(400).send("Incomplete data");
+
+    let user = await User.findOne({username: req.body.username});
+    
+    if(!user) return res.status(400).send("Usuario y/o contraseña  incorrecto !");
+    // comparar contraseña
+    const hash = await bcrypt.compare(req.body.password, user.password);
+    // validar contraseña
+    if (!hash) return res.status(400).send("Usuario y/o contraseña incorrecto.");
+
+    return res.status(200).send({user});
+});
+
 module.exports = router;
